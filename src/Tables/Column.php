@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Toolkit\Tables;
 
 
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 
 class Column
@@ -77,7 +78,15 @@ class Column
      */
     public function getOptions(): array
     {
-        return $this->_options;
+        $options = $this->_options;
+        $pass = Router::getRequest()->getParam('pass', []);
+        if (!empty($pass)) {
+            if (empty($options['url'])) {
+                $options['url'] = [];
+            }
+            $options['url'] += $pass;
+        }
+        return $options;
     }
 
     /**

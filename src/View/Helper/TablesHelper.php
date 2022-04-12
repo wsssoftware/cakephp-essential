@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Toolkit\View\Helper;
 
+use Cake\Routing\Router;
 use Toolkit\Tables\AbstractTable;
 use Cake\Error\FatalErrorException;
 use Cake\Utility\Inflector;
@@ -359,6 +360,7 @@ class TablesHelper extends Helper
     private function _getTableFooter(AbstractTable $table): string
     {
         $default = [
+            'url' => Router::getRequest()->getParam('pass', []),
             'escape' => false,
             'fullBase' => true,
             'model' => $table->getRepository()->getAlias(),
@@ -373,6 +375,7 @@ class TablesHelper extends Helper
         if (!empty($filter)) {
             $default['url']['?'][$tmpScopeName]['filter'] = $filter;
         }
+
         $pagination = $this->formatTemplate('pagination', [
             'first' => $this->Paginator->first('<i class="fad fa-arrow-to-left"></i>' . sprintf($hiddenOnSmall, ' ' . __('Primeiro')), $default),
             'previous' => $this->Paginator->prev('<i class="fad fa-arrow-left"></i>' . sprintf($hiddenOnSmall, ' ' . __('Anterior')), $default),
