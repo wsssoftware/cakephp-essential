@@ -315,9 +315,9 @@ class TablesHelper extends Helper
                 $options = [
                     'class' => 'dropdown-item table-filter-link',
                 ];
-                $url = $this->Paginator->generateUrl(['filter' => $filter, 'page' => 1], $table->getRepository()->getAlias());
+                $urlArray = Router::getRequest()->getParam('pass', []);
+                $url = $this->Paginator->generateUrl(['filter' => $filter, 'page' => 1], $table->getRepository()->getAlias(), $urlArray);
                 if ($filter === -1) {
-                    $urlArray = Router::getRequest()->getParam('pass', []);
                     $url = $this->Paginator->generateUrl(['page' => 1], $table->getRepository()->getAlias(), $urlArray);
                 }
                 if ($filter === $currentFilter) {
